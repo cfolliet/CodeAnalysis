@@ -1,5 +1,10 @@
 ﻿namespace CodeAnalysis.ViewModels
 {
+    using System.IO;
+    using System.Windows.Controls;
+
+    using CodeAnalysis.BusinessLogic;
+
     using Microsoft.Win32;
 
     public class ViewModel : BaseViewModel
@@ -67,6 +72,10 @@
         {
             if (!string.IsNullOrWhiteSpace(TrunkMetricsFilePath) && !string.IsNullOrWhiteSpace(BrancheMetricsFilePath))
             {
+                Stream codeMetricsTrunkExcel = new FileStream(TrunkMetricsFilePath, FileMode.Open);
+                Stream codeMetricsBrancheExcel = new FileStream(BrancheMetricsFilePath, FileMode.Open);
+
+                TreeView tree = CodeMetricsGenerator.Generate(codeMetricsTrunkExcel, codeMetricsBrancheExcel);
             }
         }
 

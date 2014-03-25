@@ -9,10 +9,10 @@
 
     public static class CodeMetricsGenerator
     {
-        public static TreeView Generate()
+        public static TreeView Generate(Stream codeMetricsTrunkExcel, Stream codeMetricsBrancheExcel)
         {
-            List<CodeMetricsLineModel> codeMetricsTrunk = InitCodeMetrics(null);
-            List<CodeMetricsLineModel> codeMetricsBranche = InitCodeMetrics(null);
+            List<CodeMetricsLineModel> codeMetricsTrunk = InitCodeMetrics(codeMetricsTrunkExcel);
+            List<CodeMetricsLineModel> codeMetricsBranche = InitCodeMetrics(codeMetricsBrancheExcel);
 
             IEnumerable<CodeMetricsLineView> codeMetrics = InitCodeMetricsDifferences(codeMetricsTrunk, codeMetricsBranche);
 
