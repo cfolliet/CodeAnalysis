@@ -3,6 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Code Analysis" Height="720" Width="1080">
     <Grid>
-        <TextBox Text="{Binding Path=Text}"/>
+        <TabControl>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="600" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Content="Code Metrics" HorizontalAlignment="Center" FontSize="25"></Label>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="Trunk" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
+                <TextBox Grid.Row="1" Grid.Column="1" Height="25" Text="{Binding TrunkMetricsFilePath}"></TextBox>
+                <Button Grid.Row="1" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseTrunkMetricsFileCommand}"></Button>
+
+                <Label Grid.Row="2" Grid.Column="0" Content="Branche" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
+                <TextBox Grid.Row="2" Grid.Column="1" Height="25" Text="{Binding BrancheMetricsFilePath}"></TextBox>
+                <Button Grid.Row="2" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseBrancheMetricsFileCommand}"></Button>
+
+                <Button Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Width="80" Height="35" Content="Proceed" Command="{Binding ProceedCommand}"></Button>
+
+                <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="10">
+                    <TreeView>
+                    </TreeView>
+                </Grid>
+            </Grid>
+        </TabControl>
     </Grid>
 </Window>

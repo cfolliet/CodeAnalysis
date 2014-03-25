@@ -61,6 +61,7 @@
     <Compile Include="Models\CodeMetricsLineModel.cs" />
     <Compile Include="Models\CodeMetricsLineView.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\View.xaml.cs">
       <DependentUpon>View.xaml</DependentUpon>
