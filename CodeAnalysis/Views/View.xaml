@@ -1,13 +1,12 @@
 ﻿<Window x:Class="CodeAnalysis.Views.View"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Code Analysis" Height="1000" Width="1900">
+        Title="Code Analysis" WindowState="Maximized">
     <Grid>
         <TabControl>
             <TabItem Header="Code Metrics" Height="28" Width="150">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40" />
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
                         <RowDefinition Height="*" />
@@ -16,22 +15,21 @@
                         <ColumnDefinition Width="90" />
                         <ColumnDefinition Width="600" />
                         <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="200" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Content="Code Metrics" HorizontalAlignment="Center" FontSize="25"></Label>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Trunk" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" Height="25" Text="{Binding TrunkMetricsFilePath}"></TextBox>
+                    <Button Grid.Row="0" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseTrunkMetricsFileCommand}"></Button>
 
-                    <Label Grid.Row="1" Grid.Column="0" Content="Trunk" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Height="25" Text="{Binding TrunkMetricsFilePath}"></TextBox>
-                    <Button Grid.Row="1" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseTrunkMetricsFileCommand}"></Button>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Branche" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Height="25" Text="{Binding BrancheMetricsFilePath}"></TextBox>
+                    <Button Grid.Row="1" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseBrancheMetricsFileCommand}"></Button>
 
-                    <Label Grid.Row="2" Grid.Column="0" Content="Branche" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Height="25" Text="{Binding BrancheMetricsFilePath}"></TextBox>
-                    <Button Grid.Row="2" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseBrancheMetricsFileCommand}"></Button>
+                    <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" Width="80" Height="35" Content="Proceed" Command="{Binding ProceedCommand}"></Button>
 
-                    <Button Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Width="80" Height="35" Content="Proceed" Command="{Binding ProceedCommand}"></Button>
-
-                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="10">
+                    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="10">
                         <TreeView ItemsSource="{Binding Tree}">
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate>

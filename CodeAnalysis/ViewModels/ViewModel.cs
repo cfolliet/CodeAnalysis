@@ -14,8 +14,8 @@
 
         public ViewModel()
         {
-            BrowseTrunkMetricsFileCommand = new RelayCommand(param => BrowseMetricsFile(true));
-            BrowseBrancheMetricsFileCommand = new RelayCommand(param => BrowseMetricsFile(false));
+            BrowseTrunkMetricsFileCommand = new RelayCommand(param => BrowseMetricsFile(FileType.TrunkMetrics));
+            BrowseBrancheMetricsFileCommand = new RelayCommand(param => BrowseMetricsFile(FileType.BrancheMetrics));
             ProceedCommand = new RelayCommand(param => Proceed());
         }
 
@@ -57,22 +57,36 @@
 
         #endregion
 
+        #region Enum
+
+        private enum FileType
+        {
+            TrunkMetrics,
+            BrancheMetrics,
+            TrunkCoverage,
+            BrancheCoverage,
+        }
+
+        #endregion
+
         #region Methods
 
-        private void BrowseMetricsFile(bool isTrunk)
+        private void BrowseMetricsFile(FileType type)
         {
             var dialog = new OpenFileDialog();
             bool? result = dialog.ShowDialog();
 
             if (result == true)
             {
-                if (isTrunk)
+                switch (type)
                 {
-                    TrunkMetricsFilePath = dialog.FileName;
-                }
-                else
-                {
-                    BrancheMetricsFilePath = dialog.FileName;
+                    case FileType.TrunkMetrics:
+                        TrunkMetricsFilePath = dialog.FileName;
+                        break;
+
+                    case FileType.BrancheMetrics:
+                        BrancheMetricsFilePath = dialog.FileName;
+                        break;
                 }
             }
         }
