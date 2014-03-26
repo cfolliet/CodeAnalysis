@@ -63,6 +63,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Views\BrushConverter.cs" />
     <Compile Include="Views\View.xaml.cs">
       <DependentUpon>View.xaml</DependentUpon>
     </Compile>
