@@ -7,6 +7,9 @@
     using CodeAnalysis.Models;
     using OfficeOpenXml;
 
+    /// <summary>
+    /// This class compares two code metrics files
+    /// </summary>
     public static class CodeMetricsGenerator
     {
         public static IEnumerable<CodeMetricsLineView> Generate(Stream codeMetricsTrunkExcel, Stream codeMetricsBrancheExcel)

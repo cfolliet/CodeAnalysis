@@ -98,12 +98,12 @@
                 Stream codeMetricsTrunkExcel = new FileStream(TrunkMetricsFilePath, FileMode.Open);
                 Stream codeMetricsBrancheExcel = new FileStream(BrancheMetricsFilePath, FileMode.Open);
 
-                var tmp = CodeMetricsGenerator.Generate(codeMetricsTrunkExcel, codeMetricsBrancheExcel);
+                var tmpTree = CodeMetricsGenerator.Generate(codeMetricsTrunkExcel, codeMetricsBrancheExcel);
 
                 codeMetricsTrunkExcel.Close();
                 codeMetricsBrancheExcel.Close();
 
-                Tree = new ObservableCollection<CodeMetricsLineView>(tmp);
+                Tree = new ObservableCollection<CodeMetricsLineView>(tmpTree);
             }
         }
 

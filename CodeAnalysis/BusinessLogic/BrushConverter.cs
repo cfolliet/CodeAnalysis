@@ -1,10 +1,13 @@
-﻿namespace CodeAnalysis.Views
+﻿namespace CodeAnalysis.BusinessLogic
 {
     using System;
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Media;
 
+    /// <summary>
+    /// This class convert an int to a color
+    /// </summary>
     public class BrushConverter : FrameworkElement, IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
