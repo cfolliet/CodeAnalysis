@@ -14,9 +14,13 @@
 
         public ViewModel()
         {
-            BrowseTrunkMetricsFileCommand = new RelayCommand(param => BrowseMetricsFile(FileType.TrunkMetrics));
-            BrowseBrancheMetricsFileCommand = new RelayCommand(param => BrowseMetricsFile(FileType.BrancheMetrics));
-            ProceedCommand = new RelayCommand(param => Proceed());
+            BrowseTrunkMetricsFileCommand = new RelayCommand(param => BrowseFiles(FileType.TrunkMetrics));
+            BrowseBrancheMetricsFileCommand = new RelayCommand(param => BrowseFiles(FileType.BrancheMetrics));
+            ProceedMetricsCommand = new RelayCommand(param => ProceedMetrics());
+
+            BrowseTrunkCoverageFileCommand = new RelayCommand(param => BrowseFiles(FileType.TrunkCoverage));
+            BrowseBrancheCoverageFileCommand = new RelayCommand(param => BrowseFiles(FileType.BrancheCoverage));
+            ProceedCoverageCommand = new RelayCommand(param => ProceedCoverage());
         }
 
         #endregion
@@ -25,7 +29,11 @@
 
         public RelayCommand BrowseTrunkMetricsFileCommand { get; set; }
         public RelayCommand BrowseBrancheMetricsFileCommand { get; set; }
-        public RelayCommand ProceedCommand { get; set; }
+        public RelayCommand ProceedMetricsCommand { get; set; }
+
+        public RelayCommand BrowseTrunkCoverageFileCommand { get; set; }
+        public RelayCommand BrowseBrancheCoverageFileCommand { get; set; }
+        public RelayCommand ProceedCoverageCommand { get; set; }
 
         #endregion
 
@@ -47,12 +55,28 @@
             set { brancheMetricsFilePath = value; OnPropertyChanged("BrancheMetricsFilePath"); }
         }
 
-        private ObservableCollection<CodeMetricsLineView> tree;
+        private ObservableCollection<CodeMetricsLineView> metricsTree;
 
-        public ObservableCollection<CodeMetricsLineView> Tree
+        public ObservableCollection<CodeMetricsLineView> MetricsTree
         {
-            get { return tree; }
-            set { tree = value; OnPropertyChanged("Tree"); }
+            get { return metricsTree; }
+            set { metricsTree = value; OnPropertyChanged("MetricsTree"); }
+        }
+
+        private string trunkCoverageFilePath;
+
+        public string TrunkCoverageFilePath
+        {
+            get { return trunkCoverageFilePath; }
+            set { trunkCoverageFilePath = value; OnPropertyChanged("TrunkCoverageFilePath"); }
+        }
+
+        private string brancheCoverageFilePath;
+
+        public string BrancheCoverageFilePath
+        {
+            get { return brancheCoverageFilePath; }
+            set { brancheCoverageFilePath = value; OnPropertyChanged("BrancheCoverageFilePath"); }
         }
 
         #endregion
@@ -71,9 +95,25 @@
 
         #region Methods
 
-        private void BrowseMetricsFile(FileType type)
+        private void BrowseFiles(FileType type)
         {
             var dialog = new OpenFileDialog();
+
+            switch (type)
+            {
+                case FileType.TrunkMetrics:
+                case FileType.BrancheMetrics:
+                    dialog.Title = "Open a code metrics file";
+                    dialog.Filter = "Code Metrics Files|*.xlsx";
+                    break;
+
+                case FileType.TrunkCoverage:
+                case FileType.BrancheCoverage:
+                    dialog.Title = "Open a code coverage file";
+                    dialog.Filter = "Code Coverage Files|*.coveragexml";
+                    break;
+            }
+
             bool? result = dialog.ShowDialog();
 
             if (result == true)
@@ -87,11 +127,19 @@
                     case FileType.BrancheMetrics:
                         BrancheMetricsFilePath = dialog.FileName;
                         break;
+
+                    case FileType.TrunkCoverage:
+                        TrunkCoverageFilePath = dialog.FileName;
+                        break;
+
+                    case FileType.BrancheCoverage:
+                        BrancheCoverageFilePath = dialog.FileName;
+                        break;
                 }
             }
         }
 
-        private void Proceed()
+        private void ProceedMetrics()
         {
             if (!string.IsNullOrWhiteSpace(TrunkMetricsFilePath) && !string.IsNullOrWhiteSpace(BrancheMetricsFilePath))
             {
@@ -103,8 +151,14 @@
                 codeMetricsTrunkExcel.Close();
                 codeMetricsBrancheExcel.Close();
 
-                Tree = new ObservableCollection<CodeMetricsLineView>(tmpTree);
+                MetricsTree = new ObservableCollection<CodeMetricsLineView>(tmpTree);
             }
+        }
+
+        private void ProceedCoverage()
+        {
+            if (!string.IsNullOrWhiteSpace(TrunkCoverageFilePath) && !string.IsNullOrWhiteSpace(BrancheCoverageFilePath))
+            { }
         }
 
         #endregion
