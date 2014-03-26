@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Windows.Controls;
     using CodeAnalysis.Models;
     using OfficeOpenXml;
 
@@ -12,25 +11,27 @@
     /// </summary>
     public static class CodeMetricsGenerator
     {
-        public static IEnumerable<CodeMetricsLineView> Generate(Stream codeMetricsTrunkExcel, Stream codeMetricsBrancheExcel)
+        public static IEnumerable<CodeMetricsLineView> Generate(StreamReader codeMetricsTrunkExcel, StreamReader codeMetricsBrancheExcel)
         {
             List<CodeMetricsLineModel> codeMetricsTrunk = InitCodeMetrics(codeMetricsTrunkExcel);
+            codeMetricsTrunkExcel.Close();
+
             List<CodeMetricsLineModel> codeMetricsBranche = InitCodeMetrics(codeMetricsBrancheExcel);
+            codeMetricsBrancheExcel.Close();
 
             IEnumerable<CodeMetricsLineView> codeMetrics = InitCodeMetricsDifferences(codeMetricsTrunk, codeMetricsBranche);
 
-            return codeMetrics;
-            // return InitMetricsTree(codeMetrics);
+            return InitMetricsTree(codeMetrics);
         }
 
         /// <summary>
         /// Creates a list of CodeMetricsLineModel with information from the excel file
         /// </summary>
-        private static List<CodeMetricsLineModel> InitCodeMetrics(Stream excel)
+        private static List<CodeMetricsLineModel> InitCodeMetrics(StreamReader excel)
         {
             var codeMetrics = new List<CodeMetricsLineModel>();
 
-            using (var excelPackage = new ExcelPackage(excel))
+            using (var excelPackage = new ExcelPackage(excel.BaseStream))
             {
                 ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[1];
 
@@ -137,33 +138,33 @@
         /// <summary>
         /// Init the tree of code metrics
         /// </summary>
-        private static TreeView InitMetricsTree(IEnumerable<CodeMetricsLineView> codeMetrics)
+        private static IEnumerable<CodeMetricsLineView> InitMetricsTree(IEnumerable<CodeMetricsLineView> codeMetrics)
         {
-            var tree = new TreeView();
+            var list = new List<CodeMetricsLineView>();
 
             foreach (CodeMetricsLineView line in codeMetrics)
             {
                 switch (line.Scope)
                 {
                     case "Project":
-                        tree.Items.Add(line);
+                        list.Add(line);
                         break;
 
                     case "Namespace":
-                        tree.Items.Add(line);
+                        list.Last().Children.Add(line);
                         break;
 
                     case "Type":
-                        tree.Items.Add(line);
+                        list.Last().Children.Last().Children.Add(line);
                         break;
 
                     case "Member":
-                        tree.Items.Add(line);
+                        list.Last().Children.Last().Children.Last().Children.Add(line);
                         break;
                 }
             }
 
-            return tree;
+            return list;
         }
     }
 }

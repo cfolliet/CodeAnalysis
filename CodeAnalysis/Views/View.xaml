@@ -36,14 +36,14 @@
                     <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="10">
                         <TreeView ItemsSource="{Binding MetricsTree}">
                             <TreeView.ItemTemplate>
-                                <HierarchicalDataTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="200" />
                                             <ColumnDefinition Width="180" />
                                             <ColumnDefinition Width="200" />
                                             <ColumnDefinition Width="250" />
-                                            <ColumnDefinition Width="700" />
+                                            <ColumnDefinition Width="600" />
                                             <ColumnDefinition Width="80" />
                                             <ColumnDefinition Width="80" />
                                             <ColumnDefinition Width="80" />

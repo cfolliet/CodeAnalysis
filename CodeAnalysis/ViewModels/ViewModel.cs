@@ -143,14 +143,10 @@
         {
             if (!string.IsNullOrWhiteSpace(TrunkMetricsFilePath) && !string.IsNullOrWhiteSpace(BrancheMetricsFilePath))
             {
-                Stream codeMetricsTrunkExcel = new FileStream(TrunkMetricsFilePath, FileMode.Open);
-                Stream codeMetricsBrancheExcel = new FileStream(BrancheMetricsFilePath, FileMode.Open);
+                var codeMetricsTrunkExcel = new StreamReader(TrunkMetricsFilePath);
+                var codeMetricsBrancheExcel = new StreamReader(BrancheMetricsFilePath);
 
                 var tmpTree = CodeMetricsGenerator.Generate(codeMetricsTrunkExcel, codeMetricsBrancheExcel);
-
-                codeMetricsTrunkExcel.Close();
-                codeMetricsBrancheExcel.Close();
-
                 MetricsTree = new ObservableCollection<CodeMetricsLineView>(tmpTree);
             }
         }
@@ -158,7 +154,12 @@
         private void ProceedCoverage()
         {
             if (!string.IsNullOrWhiteSpace(TrunkCoverageFilePath) && !string.IsNullOrWhiteSpace(BrancheCoverageFilePath))
-            { }
+            {
+                var codeCoverageTrunkExcel = new StreamReader(TrunkCoverageFilePath);
+                var codeCoverageBrancheExcel = new StreamReader(BrancheCoverageFilePath);
+
+                CodeCoverageGenerator.Generate(codeCoverageTrunkExcel, codeCoverageBrancheExcel);
+            }
         }
 
         #endregion
