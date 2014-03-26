@@ -1,9 +1,10 @@
 ﻿namespace CodeAnalysis.ViewModels
 {
+    using System.Collections.ObjectModel;
     using System.IO;
-    using System.Windows.Controls;
 
     using CodeAnalysis.BusinessLogic;
+    using CodeAnalysis.Models;
 
     using Microsoft.Win32;
 
@@ -46,6 +47,14 @@
             set { brancheMetricsFilePath = value; OnPropertyChanged("BrancheMetricsFilePath"); }
         }
 
+        private ObservableCollection<CodeMetricsLineView> tree;
+
+        public ObservableCollection<CodeMetricsLineView> Tree
+        {
+            get { return tree; }
+            set { tree = value; OnPropertyChanged("Tree"); }
+        }
+
         #endregion
 
         #region Methods
@@ -75,7 +84,12 @@
                 Stream codeMetricsTrunkExcel = new FileStream(TrunkMetricsFilePath, FileMode.Open);
                 Stream codeMetricsBrancheExcel = new FileStream(BrancheMetricsFilePath, FileMode.Open);
 
-                TreeView tree = CodeMetricsGenerator.Generate(codeMetricsTrunkExcel, codeMetricsBrancheExcel);
+                var tmp = CodeMetricsGenerator.Generate(codeMetricsTrunkExcel, codeMetricsBrancheExcel);
+
+                codeMetricsTrunkExcel.Close();
+                codeMetricsBrancheExcel.Close();
+
+                Tree = new ObservableCollection<CodeMetricsLineView>(tmp);
             }
         }
 

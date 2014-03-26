@@ -9,14 +9,15 @@
 
     public static class CodeMetricsGenerator
     {
-        public static TreeView Generate(Stream codeMetricsTrunkExcel, Stream codeMetricsBrancheExcel)
+        public static IEnumerable<CodeMetricsLineView> Generate(Stream codeMetricsTrunkExcel, Stream codeMetricsBrancheExcel)
         {
             List<CodeMetricsLineModel> codeMetricsTrunk = InitCodeMetrics(codeMetricsTrunkExcel);
             List<CodeMetricsLineModel> codeMetricsBranche = InitCodeMetrics(codeMetricsBrancheExcel);
 
             IEnumerable<CodeMetricsLineView> codeMetrics = InitCodeMetricsDifferences(codeMetricsTrunk, codeMetricsBranche);
 
-            return InitMetricsTree(codeMetrics);
+            return codeMetrics;
+            // return InitMetricsTree(codeMetrics);
         }
 
         /// <summary>
