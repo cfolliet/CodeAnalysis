@@ -13,6 +13,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
+                        <RowDefinition Height="32" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -33,7 +34,32 @@
 
                     <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" Width="80" Height="35" Content="Proceed" Command="{Binding ProceedMetricsCommand}"></Button>
 
-                    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="10">
+                    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="36,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="180" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="250" />
+                            <ColumnDefinition Width="550" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="90" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Scope"></Label>
+                        <Label Grid.Column="1" Content="Project"></Label>
+                        <Label Grid.Column="2" Content="Namespace"></Label>
+                        <Label Grid.Column="3" Content="Type"></Label>
+                        <Label Grid.Column="4" Content="Member"></Label>
+                        <Label Grid.Column="5" Content="Maintainability"></Label>
+                        <Label Grid.Column="6" Content="Complexity"></Label>
+                        <Label Grid.Column="7" Content="Depth"></Label>
+                        <Label Grid.Column="8" Content="Coupling"></Label>
+                        <Label Grid.Column="9" Content="Lines"></Label>
+                    </Grid>
+                    
+                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,0,10,10">
                         <TreeView ItemsSource="{Binding MetricsTree}">
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
@@ -43,12 +69,12 @@
                                             <ColumnDefinition Width="180" />
                                             <ColumnDefinition Width="200" />
                                             <ColumnDefinition Width="250" />
-                                            <ColumnDefinition Width="600" />
-                                            <ColumnDefinition Width="80" />
-                                            <ColumnDefinition Width="80" />
-                                            <ColumnDefinition Width="80" />
-                                            <ColumnDefinition Width="80" />
-                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="550" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="90" />
                                         </Grid.ColumnDefinitions>
 
                                         <Label Grid.Column="0" Content="{Binding Scope}"></Label>
