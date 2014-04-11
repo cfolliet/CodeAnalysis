@@ -114,20 +114,14 @@
                         Type = lineCodeMetricsTrunk.Type,
                         Member = lineCodeMetricsTrunk.Member,
 
-                        MaintainabilityIndex = lineCodeMetricsTrunk.MaintainabilityIndex,
-                        MaintainabilityIndexDifference = lineCodeMetricsTrunk.MaintainabilityIndex - lineCodeMetricsBranche.MaintainabilityIndex,
-
-                        CyclomaticComplexity = lineCodeMetricsTrunk.CyclomaticComplexity,
+                        MaintainabilityIndexDifference = -(lineCodeMetricsTrunk.MaintainabilityIndex - lineCodeMetricsBranche.MaintainabilityIndex),
                         CyclomaticComplexityDifference = lineCodeMetricsTrunk.CyclomaticComplexity - lineCodeMetricsBranche.CyclomaticComplexity,
-
-                        DepthOfInheritance = lineCodeMetricsTrunk.DepthOfInheritance,
                         DepthOfInheritanceDifference = lineCodeMetricsTrunk.DepthOfInheritance - lineCodeMetricsBranche.DepthOfInheritance,
-
-                        ClassCoupling = lineCodeMetricsTrunk.ClassCoupling,
                         ClassCouplingDifference = lineCodeMetricsTrunk.ClassCoupling - lineCodeMetricsBranche.ClassCoupling,
+                        LinesOfCodeDifference = lineCodeMetricsTrunk.LinesOfCode - lineCodeMetricsBranche.LinesOfCode,
 
-                        LinesOfCode = lineCodeMetricsTrunk.LinesOfCode,
-                        LinesOfCodeDifference = lineCodeMetricsTrunk.LinesOfCode - lineCodeMetricsBranche.LinesOfCode
+                        CodeMetricsTrunk = lineCodeMetricsTrunk,
+                        CodeMetricsBranche = lineCodeMetricsBranche
                     });
                 }
             }
