@@ -1,5 +1,7 @@
 ﻿namespace CodeAnalysis.BusinessLogic
 {
+    using CodeAnalysis.Models;
+    using System.Collections.Generic;
     using System.IO;
 
     /// <summary>
@@ -7,7 +9,7 @@
     /// </summary>
     public class CodeCoverageGenerator
     {
-        public static void Generate(StreamReader codeCoverageTrunkXml, StreamReader codeCoverageBrancheXml)
+        public static IEnumerable<CodeCoverageLineView> Generate(StreamReader codeCoverageTrunkXml, StreamReader codeCoverageBrancheXml)
         {
             string line;
 
@@ -18,6 +20,8 @@
 
             codeCoverageTrunkXml.Close();
             codeCoverageBrancheXml.Close();
+
+            return new List<CodeCoverageLineView>();
         }
     }
 }

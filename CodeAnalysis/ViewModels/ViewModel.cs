@@ -1,12 +1,10 @@
 ﻿namespace CodeAnalysis.ViewModels
 {
-    using System.Collections.ObjectModel;
-    using System.IO;
-
     using CodeAnalysis.BusinessLogic;
     using CodeAnalysis.Models;
-
     using Microsoft.Win32;
+    using System.Collections.ObjectModel;
+    using System.IO;
 
     public class ViewModel : BaseViewModel
     {
@@ -77,6 +75,14 @@
         {
             get { return brancheCoverageFilePath; }
             set { brancheCoverageFilePath = value; OnPropertyChanged("BrancheCoverageFilePath"); }
+        }
+
+        private ObservableCollection<CodeCoverageLineView> coverageTree;
+
+        public ObservableCollection<CodeCoverageLineView> CoverageTree
+        {
+            get { return coverageTree; }
+            set { coverageTree = value; OnPropertyChanged("CoverageTree"); }
         }
 
         #endregion
@@ -158,7 +164,8 @@
                 var codeCoverageTrunkExcel = new StreamReader(TrunkCoverageFilePath);
                 var codeCoverageBrancheExcel = new StreamReader(BrancheCoverageFilePath);
 
-                CodeCoverageGenerator.Generate(codeCoverageTrunkExcel, codeCoverageBrancheExcel);
+                var tmpTree = CodeCoverageGenerator.Generate(codeCoverageTrunkExcel, codeCoverageBrancheExcel);
+                CoverageTree = new ObservableCollection<CodeCoverageLineView>(tmpTree);
             }
         }
 
