@@ -25,14 +25,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Content="Trunk" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
-                    <TextBox Grid.Row="0" Grid.Column="1" Height="25" Text="{Binding TrunkMetricsFilePath}"></TextBox>
-                    <Button Grid.Row="0" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseTrunkMetricsFileCommand}"></Button>
+                    <TextBox Grid.Row="0" Grid.Column="1" Height="25" Text="{Binding CodeMetricsTrunkFilePath}"></TextBox>
+                    <Button Grid.Row="0" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseCodeMetricsTrunkFileCommand}"></Button>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Branche" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Height="25" Text="{Binding BrancheMetricsFilePath}"></TextBox>
-                    <Button Grid.Row="1" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseBrancheMetricsFileCommand}"></Button>
+                    <TextBox Grid.Row="1" Grid.Column="1" Height="25" Text="{Binding CodeMetricsBrancheFilePath}"></TextBox>
+                    <Button Grid.Row="1" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseCodeMetricsBrancheFileCommand}"></Button>
 
-                    <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" Width="80" Height="35" Content="Proceed" Command="{Binding ProceedMetricsCommand}"></Button>
+                    <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" Width="80" Height="35" Content="Proceed" Command="{Binding ProceedCodeMetricsCommand}"></Button>
 
                     <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="36,10,0,0">
                         <Grid.ColumnDefinitions>
@@ -60,7 +60,7 @@
                     </Grid>
 
                     <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Margin="10,0,10,10">
-                        <TreeView ItemsSource="{Binding MetricsTree}">
+                        <TreeView ItemsSource="{Binding CodeMetricsTree}">
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
                                     <Grid>
@@ -139,6 +139,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
+                        <RowDefinition Height="32" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -150,16 +151,76 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Content="Trunk" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
-                    <TextBox Grid.Row="0" Grid.Column="1" Height="25" Text="{Binding TrunkCoverageFilePath}"></TextBox>
-                    <Button Grid.Row="0" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseTrunkCoverageFileCommand}"></Button>
+                    <TextBox Grid.Row="0" Grid.Column="1" Height="25" Text="{Binding CodeCoverageTrunkFilePath}"></TextBox>
+                    <Button Grid.Row="0" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseCodeCoverageTrunkFileCommand}"></Button>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Branche" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Height="25" Text="{Binding BrancheCoverageFilePath}"></TextBox>
-                    <Button Grid.Row="1" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseBrancheCoverageFileCommand}"></Button>
+                    <TextBox Grid.Row="1" Grid.Column="1" Height="25" Text="{Binding CodeCoverageBrancheFilePath}"></TextBox>
+                    <Button Grid.Row="1" Grid.Column="2" Width="80" Height="35" Content="Browse" Command="{Binding BrowseCodeCoverageBrancheFileCommand}"></Button>
 
-                    <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" Width="80" Height="35" Content="Proceed" Command="{Binding ProceedCoverageCommand}"></Button>
+                    <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" Width="80" Height="35" Content="Proceed" Command="{Binding ProceedCodeCoverageCommand}"></Button>
 
-                    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="10">
+                    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="36,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="180" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="250" />
+                            <ColumnDefinition Width="500" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Scope"></Label>
+                        <Label Grid.Column="1" Content="Project"></Label>
+                        <Label Grid.Column="2" Content="Namespace"></Label>
+                        <Label Grid.Column="3" Content="Type"></Label>
+                        <Label Grid.Column="4" Content="Member"></Label>
+                        <Label Grid.Column="5" Content="Covered Line (%)"></Label>
+                        <Label Grid.Column="6" Content="Covered Line"></Label>
+                    </Grid>
+
+                    <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Margin="10">
+                        <!--<TreeView ItemsSource="{Binding CodeCoverageTree}">
+                            <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="180" />
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="250" />
+                                            <ColumnDefinition Width="500" />
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="150" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Grid.Column="0" Content="{Binding Scope}"></Label>
+                                        <Label Grid.Column="1" Content="{Binding Project}"></Label>
+                                        <Label Grid.Column="2" Content="{Binding Namespace}"></Label>
+                                        <Label Grid.Column="3" Content="{Binding Type}"></Label>
+                                        <Label Grid.Column="4" Content="{Binding Member}"></Label>
+
+                                        <TextBlock Grid.Column="5" Background="{Binding CoveredLinePercentageDifference, Converter={StaticResource BrushConverter}}">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{} {0} / {1}">
+                                                    <Binding Path="CodeCoverageTrunk.CoveredLinePercentage" />
+                                                    <Binding Path="CodeCoverageBranche.CoveredLinePercentage" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                        
+                                        <TextBlock Grid.Column="6" Background="{Binding CoveredLineNumberDifference, Converter={StaticResource BrushConverter}}">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{} {0} / {1}">
+                                                    <Binding Path="CodeCoverageTrunk.CoveredLineNumber" />
+                                                    <Binding Path="CodeCoverageBranche.CoveredLineNumber" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </Grid>
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>-->
                     </Grid>
                 </Grid>
             </TabItem>

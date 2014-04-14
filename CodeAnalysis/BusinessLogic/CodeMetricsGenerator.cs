@@ -11,17 +11,17 @@
     /// </summary>
     public static class CodeMetricsGenerator
     {
-        public static IEnumerable<CodeMetricsLineView> Generate(StreamReader codeMetricsTrunkExcel, StreamReader codeMetricsBrancheExcel)
+        public static IEnumerable<CodeMetricsLineView> Generate(StreamReader codeMetricsTrunkFile, StreamReader codeMetricsBrancheFile)
         {
-            List<CodeMetricsLineModel> codeMetricsTrunk = InitCodeMetrics(codeMetricsTrunkExcel);
-            codeMetricsTrunkExcel.Close();
+            List<CodeMetricsLineModel> codeMetricsTrunk = InitCodeMetrics(codeMetricsTrunkFile);
+            codeMetricsTrunkFile.Close();
 
-            List<CodeMetricsLineModel> codeMetricsBranche = InitCodeMetrics(codeMetricsBrancheExcel);
-            codeMetricsBrancheExcel.Close();
+            List<CodeMetricsLineModel> codeMetricsBranche = InitCodeMetrics(codeMetricsBrancheFile);
+            codeMetricsBrancheFile.Close();
 
             IEnumerable<CodeMetricsLineView> codeMetrics = InitCodeMetricsDifferences(codeMetricsTrunk, codeMetricsBranche);
 
-            return InitMetricsTree(codeMetrics);
+            return InitCodeMetricsTree(codeMetrics);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@
         /// <summary>
         /// Init the tree of code metrics
         /// </summary>
-        private static IEnumerable<CodeMetricsLineView> InitMetricsTree(IEnumerable<CodeMetricsLineView> codeMetrics)
+        private static IEnumerable<CodeMetricsLineView> InitCodeMetricsTree(IEnumerable<CodeMetricsLineView> codeMetrics)
         {
             var list = new List<CodeMetricsLineView>();
 

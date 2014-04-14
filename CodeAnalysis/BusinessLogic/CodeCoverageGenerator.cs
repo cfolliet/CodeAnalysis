@@ -9,17 +9,17 @@
     /// </summary>
     public class CodeCoverageGenerator
     {
-        public static IEnumerable<CodeCoverageLineView> Generate(StreamReader codeCoverageTrunkXml, StreamReader codeCoverageBrancheXml)
+        public static IEnumerable<CodeCoverageLineView> Generate(StreamReader codeCoverageTrunkFile, StreamReader codeCoverageBrancheFile)
         {
             string line;
 
-            while ((line = codeCoverageTrunkXml.ReadLine()) != null)
+            while ((line = codeCoverageTrunkFile.ReadLine()) != null)
             {
                 // treat file here
             }
 
-            codeCoverageTrunkXml.Close();
-            codeCoverageBrancheXml.Close();
+            codeCoverageTrunkFile.Close();
+            codeCoverageBrancheFile.Close();
 
             return new List<CodeCoverageLineView>();
         }

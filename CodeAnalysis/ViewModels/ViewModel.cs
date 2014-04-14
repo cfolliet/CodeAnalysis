@@ -1,10 +1,10 @@
 ﻿namespace CodeAnalysis.ViewModels
 {
+    using System.Collections.ObjectModel;
+    using System.IO;
     using CodeAnalysis.BusinessLogic;
     using CodeAnalysis.Models;
     using Microsoft.Win32;
-    using System.Collections.ObjectModel;
-    using System.IO;
 
     public class ViewModel : BaseViewModel
     {
@@ -12,77 +12,77 @@
 
         public ViewModel()
         {
-            BrowseTrunkMetricsFileCommand = new RelayCommand(param => BrowseFiles(FileType.TrunkMetrics));
-            BrowseBrancheMetricsFileCommand = new RelayCommand(param => BrowseFiles(FileType.BrancheMetrics));
-            ProceedMetricsCommand = new RelayCommand(param => ProceedMetrics());
+            BrowseCodeMetricsTrunkFileCommand = new RelayCommand(param => BrowseFiles(FileType.TrunkMetrics));
+            BrowseCodeMetricsBrancheFileCommand = new RelayCommand(param => BrowseFiles(FileType.BrancheMetrics));
+            ProceedCodeMetricsCommand = new RelayCommand(param => ProceedCodeMetrics());
 
-            BrowseTrunkCoverageFileCommand = new RelayCommand(param => BrowseFiles(FileType.TrunkCoverage));
-            BrowseBrancheCoverageFileCommand = new RelayCommand(param => BrowseFiles(FileType.BrancheCoverage));
-            ProceedCoverageCommand = new RelayCommand(param => ProceedCoverage());
+            BrowseCodeCoverageTrunkFileCommand = new RelayCommand(param => BrowseFiles(FileType.TrunkCoverage));
+            BrowseCodeCoverageBrancheFileCommand = new RelayCommand(param => BrowseFiles(FileType.BrancheCoverage));
+            ProceedCodeCoverageCommand = new RelayCommand(param => ProceedCodeCoverage());
         }
 
         #endregion
 
         #region Commands
 
-        public RelayCommand BrowseTrunkMetricsFileCommand { get; set; }
-        public RelayCommand BrowseBrancheMetricsFileCommand { get; set; }
-        public RelayCommand ProceedMetricsCommand { get; set; }
+        public RelayCommand BrowseCodeMetricsTrunkFileCommand { get; set; }
+        public RelayCommand BrowseCodeMetricsBrancheFileCommand { get; set; }
+        public RelayCommand ProceedCodeMetricsCommand { get; set; }
 
-        public RelayCommand BrowseTrunkCoverageFileCommand { get; set; }
-        public RelayCommand BrowseBrancheCoverageFileCommand { get; set; }
-        public RelayCommand ProceedCoverageCommand { get; set; }
+        public RelayCommand BrowseCodeCoverageTrunkFileCommand { get; set; }
+        public RelayCommand BrowseCodeCoverageBrancheFileCommand { get; set; }
+        public RelayCommand ProceedCodeCoverageCommand { get; set; }
 
         #endregion
 
         #region Properties
 
-        private string trunkMetricsFilePath;
+        private string codeMetricsTrunkFilePath;
 
-        public string TrunkMetricsFilePath
+        public string CodeMetricsTrunkFilePath
         {
-            get { return trunkMetricsFilePath; }
-            set { trunkMetricsFilePath = value; OnPropertyChanged("TrunkMetricsFilePath"); }
+            get { return codeMetricsTrunkFilePath; }
+            set { codeMetricsTrunkFilePath = value; OnPropertyChanged("CodeMetricsTrunkFilePath"); }
         }
 
-        private string brancheMetricsFilePath;
+        private string codeMetricsBrancheFilePath;
 
-        public string BrancheMetricsFilePath
+        public string CodeMetricsBrancheFilePath
         {
-            get { return brancheMetricsFilePath; }
-            set { brancheMetricsFilePath = value; OnPropertyChanged("BrancheMetricsFilePath"); }
+            get { return codeMetricsBrancheFilePath; }
+            set { codeMetricsBrancheFilePath = value; OnPropertyChanged("CodeMetricsBrancheFilePath"); }
         }
 
-        private ObservableCollection<CodeMetricsLineView> metricsTree;
+        private ObservableCollection<CodeMetricsLineView> codeMetricsTree;
 
-        public ObservableCollection<CodeMetricsLineView> MetricsTree
+        public ObservableCollection<CodeMetricsLineView> CodeMetricsTree
         {
-            get { return metricsTree; }
-            set { metricsTree = value; OnPropertyChanged("MetricsTree"); }
+            get { return codeMetricsTree; }
+            set { codeMetricsTree = value; OnPropertyChanged("CodeMetricsTree"); }
         }
 
-        private string trunkCoverageFilePath;
+        private string codeCoverageTrunkFilePath;
 
-        public string TrunkCoverageFilePath
+        public string CodeCoverageTrunkFilePath
         {
-            get { return trunkCoverageFilePath; }
-            set { trunkCoverageFilePath = value; OnPropertyChanged("TrunkCoverageFilePath"); }
+            get { return codeCoverageTrunkFilePath; }
+            set { codeCoverageTrunkFilePath = value; OnPropertyChanged("CodeCoverageTrunkFilePath"); }
         }
 
-        private string brancheCoverageFilePath;
+        private string codeCoverageBrancheFilePath;
 
-        public string BrancheCoverageFilePath
+        public string CodeCoverageBrancheFilePath
         {
-            get { return brancheCoverageFilePath; }
-            set { brancheCoverageFilePath = value; OnPropertyChanged("BrancheCoverageFilePath"); }
+            get { return codeCoverageBrancheFilePath; }
+            set { codeCoverageBrancheFilePath = value; OnPropertyChanged("CodeCoverageBrancheFilePath"); }
         }
 
-        private ObservableCollection<CodeCoverageLineView> coverageTree;
+        private ObservableCollection<CodeCoverageLineView> codeCoverageTree;
 
-        public ObservableCollection<CodeCoverageLineView> CoverageTree
+        public ObservableCollection<CodeCoverageLineView> CodeCoverageTree
         {
-            get { return coverageTree; }
-            set { coverageTree = value; OnPropertyChanged("CoverageTree"); }
+            get { return codeCoverageTree; }
+            set { codeCoverageTree = value; OnPropertyChanged("CodeCoverageTree"); }
         }
 
         #endregion
@@ -127,45 +127,45 @@
                 switch (type)
                 {
                     case FileType.TrunkMetrics:
-                        TrunkMetricsFilePath = dialog.FileName;
+                        CodeMetricsTrunkFilePath = dialog.FileName;
                         break;
 
                     case FileType.BrancheMetrics:
-                        BrancheMetricsFilePath = dialog.FileName;
+                        CodeMetricsBrancheFilePath = dialog.FileName;
                         break;
 
                     case FileType.TrunkCoverage:
-                        TrunkCoverageFilePath = dialog.FileName;
+                        CodeCoverageTrunkFilePath = dialog.FileName;
                         break;
 
                     case FileType.BrancheCoverage:
-                        BrancheCoverageFilePath = dialog.FileName;
+                        CodeCoverageBrancheFilePath = dialog.FileName;
                         break;
                 }
             }
         }
 
-        private void ProceedMetrics()
+        private void ProceedCodeMetrics()
         {
-            if (!string.IsNullOrWhiteSpace(TrunkMetricsFilePath) && !string.IsNullOrWhiteSpace(BrancheMetricsFilePath))
+            if (!string.IsNullOrWhiteSpace(CodeMetricsTrunkFilePath) && !string.IsNullOrWhiteSpace(CodeMetricsBrancheFilePath))
             {
-                var codeMetricsTrunkExcel = new StreamReader(TrunkMetricsFilePath);
-                var codeMetricsBrancheExcel = new StreamReader(BrancheMetricsFilePath);
+                var codeMetricsTrunkFile = new StreamReader(CodeMetricsTrunkFilePath);
+                var codeMetricsBrancheFile = new StreamReader(CodeMetricsBrancheFilePath);
 
-                var tmpTree = CodeMetricsGenerator.Generate(codeMetricsTrunkExcel, codeMetricsBrancheExcel);
-                MetricsTree = new ObservableCollection<CodeMetricsLineView>(tmpTree);
+                var tmpTree = CodeMetricsGenerator.Generate(codeMetricsTrunkFile, codeMetricsBrancheFile);
+                CodeMetricsTree = new ObservableCollection<CodeMetricsLineView>(tmpTree);
             }
         }
 
-        private void ProceedCoverage()
+        private void ProceedCodeCoverage()
         {
-            if (!string.IsNullOrWhiteSpace(TrunkCoverageFilePath) && !string.IsNullOrWhiteSpace(BrancheCoverageFilePath))
+            if (!string.IsNullOrWhiteSpace(CodeCoverageTrunkFilePath) && !string.IsNullOrWhiteSpace(CodeCoverageBrancheFilePath))
             {
-                var codeCoverageTrunkExcel = new StreamReader(TrunkCoverageFilePath);
-                var codeCoverageBrancheExcel = new StreamReader(BrancheCoverageFilePath);
+                var codeCoverageTrunkFile = new StreamReader(CodeCoverageTrunkFilePath);
+                var codeCoverageBrancheFile = new StreamReader(CodeCoverageBrancheFilePath);
 
-                var tmpTree = CodeCoverageGenerator.Generate(codeCoverageTrunkExcel, codeCoverageBrancheExcel);
-                CoverageTree = new ObservableCollection<CodeCoverageLineView>(tmpTree);
+                var tmpTree = CodeCoverageGenerator.Generate(codeCoverageTrunkFile, codeCoverageBrancheFile);
+                CodeCoverageTree = new ObservableCollection<CodeCoverageLineView>(tmpTree);
             }
         }
 

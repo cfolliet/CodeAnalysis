@@ -7,6 +7,7 @@
         public string Namespace { get; set; }
         public string Type { get; set; }
         public string Member { get; set; }
+
         public double? MaintainabilityIndex { get; set; }
         public double? CyclomaticComplexity { get; set; }
         public double? DepthOfInheritance { get; set; }
