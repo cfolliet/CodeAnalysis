@@ -27,11 +27,11 @@
         /// <summary>
         /// Creates a list of CodeMetricsLineModel with information from the excel file
         /// </summary>
-        private static List<CodeMetricsLineModel> InitCodeMetrics(StreamReader excel)
+        private static List<CodeMetricsLineModel> InitCodeMetrics(StreamReader file)
         {
             var codeMetrics = new List<CodeMetricsLineModel>();
 
-            using (var excelPackage = new ExcelPackage(excel.BaseStream))
+            using (var excelPackage = new ExcelPackage(file.BaseStream))
             {
                 ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[1];
 
