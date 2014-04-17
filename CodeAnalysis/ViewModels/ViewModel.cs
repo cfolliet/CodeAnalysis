@@ -21,6 +21,16 @@
             BrowseCodeCoverageTrunkFileCommand = new RelayCommand(param => BrowseFiles(FileType.TrunkCoverage));
             BrowseCodeCoverageBrancheFileCommand = new RelayCommand(param => BrowseFiles(FileType.BrancheCoverage));
             ProceedCodeCoverageCommand = new RelayCommand(param => ProceedCodeCoverage());
+
+
+            string[] args = Environment.GetCommandLineArgs();
+
+            if (args.Length == 3)
+            {
+                CodeMetricsTrunkFilePath = args[1];
+                CodeMetricsBrancheFilePath = args[2];
+                ProceedCodeMetrics();
+            }
         }
 
         #endregion
