@@ -1,5 +1,7 @@
 ﻿namespace CodeAnalysis.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
     using CodeAnalysis.BusinessLogic;
@@ -110,7 +112,7 @@
                 case FileType.TrunkMetrics:
                 case FileType.BrancheMetrics:
                     dialog.Title = "Open a code metrics file";
-                    dialog.Filter = "Code Metrics Files|*.xlsx";
+                    dialog.Filter = "Code Metrics Files|*.xlsx;*.xml";
                     break;
 
                 case FileType.TrunkCoverage:
@@ -149,10 +151,27 @@
         {
             if (!string.IsNullOrWhiteSpace(CodeMetricsTrunkFilePath) && !string.IsNullOrWhiteSpace(CodeMetricsBrancheFilePath))
             {
-                var codeMetricsTrunkFile = new StreamReader(CodeMetricsTrunkFilePath);
-                var codeMetricsBrancheFile = new StreamReader(CodeMetricsBrancheFilePath);
+                const string EXTENSION_XLSX = ".xlsx";
+                const string EXTENSION_XML = ".xml";
 
-                var tmpTree = CodeMetricsGenerator.Generate(codeMetricsTrunkFile, codeMetricsBrancheFile);
+                var codeMetricsTrunkFileExtension = Path.GetExtension(codeMetricsTrunkFilePath);
+                var codeMetricsBrancheFileExtension = Path.GetExtension(codeMetricsBrancheFilePath);
+
+                IEnumerable<CodeMetricsLineView> tmpTree;
+
+                if (codeMetricsTrunkFileExtension == EXTENSION_XLSX && codeMetricsBrancheFileExtension == EXTENSION_XLSX)
+                {
+                    tmpTree = CodeMetricsExcelGenerator.Generate(CodeMetricsTrunkFilePath, CodeMetricsBrancheFilePath);
+                }
+                else if (codeMetricsTrunkFileExtension == EXTENSION_XML && codeMetricsBrancheFileExtension == EXTENSION_XML)
+                {
+                    tmpTree = CodeMetricsXmlGenerator.Generate(CodeMetricsTrunkFilePath, CodeMetricsBrancheFilePath);
+                }
+                else
+                {
+                    throw new InvalidOperationException("codeMetricsBrancheFile extension invalid");
+                }
+
                 CodeMetricsTree = new ObservableCollection<CodeMetricsLineView>(tmpTree);
             }
         }
