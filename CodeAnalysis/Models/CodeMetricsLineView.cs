@@ -1,6 +1,7 @@
 ﻿namespace CodeAnalysis.Models
 {
     using System.Collections.Generic;
+    using System.Windows.Media;
 
     public class CodeMetricsLineView
     {
@@ -25,5 +26,7 @@
         public CodeMetricsLineModel CodeMetricsBranche { get; set; }
 
         public List<CodeMetricsLineView> Children { get; set; }
+
+        public SolidColorBrush Color { get; set; }
     }
 }

@@ -57,6 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BusinessLogic\CodeCoverageGenerator.cs" />
+    <Compile Include="BusinessLogic\CodeMetricsDiffer.cs" />
     <Compile Include="BusinessLogic\CodeMetricsXmlGenerator.cs" />
     <Compile Include="BusinessLogic\CodeMetricsExcelGenerator.cs" />
     <Compile Include="Models\CodeCoverageLineModel.cs" />

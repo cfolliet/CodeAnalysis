@@ -16,7 +16,7 @@
         {
             List<CodeMetricsLineModel> codeMetricsTrunk = InitCodeMetrics(codeMetricsTrunkFilePath);
             List<CodeMetricsLineModel> codeMetricsBranche = InitCodeMetrics(codeMetricsBrancheFilePath);
-            IEnumerable<CodeMetricsLineView> codeMetrics = InitCodeMetricsDifferences(codeMetricsTrunk, codeMetricsBranche);
+            IEnumerable<CodeMetricsLineView> codeMetrics = CodeMetricsDiffer.InitCodeMetricsDifferences(codeMetricsTrunk, codeMetricsBranche);
 
             return InitCodeMetricsTree(codeMetrics);
         }
@@ -50,13 +50,13 @@
                 switch (descendantName)
                 {
                     case "Module":
-                        LoadLevel(subNode, subLine, codeMetrics, "Namespace", SetNamespace);
+                        CodeMetricsXmlGenerator.LoadLevel(subNode, subLine, codeMetrics, "Namespace", SetNamespace);
                         break;
                     case "Namespace":
-                        LoadLevel(subNode, subLine, codeMetrics, "Type", SetType);
+                        CodeMetricsXmlGenerator.LoadLevel(subNode, subLine, codeMetrics, "Type", SetType);
                         break;
                     case "Type":
-                        LoadLevel(subNode, subLine, codeMetrics, "Member", SetMember);
+                        CodeMetricsXmlGenerator.LoadLevel(subNode, subLine, codeMetrics, "Member", SetMember);
                         break;
                     case "Member":
                     default:
@@ -137,49 +137,6 @@
                 }
             }
         }
-
-        /// <summary>
-        /// Creates a list of CodeMetricsLineView containing difference of metrics between two lists of CodeMetricsLineModel
-        /// </summary>
-        private static IEnumerable<CodeMetricsLineView> InitCodeMetricsDifferences(IEnumerable<CodeMetricsLineModel> codeMetricsTrunk, List<CodeMetricsLineModel> codeMetricsBranche)
-        {
-            var codeMetrics = new List<CodeMetricsLineView>();
-
-            foreach (CodeMetricsLineModel lineCodeMetricsTrunk in codeMetricsTrunk)
-            {
-                // Get the same line from the other project
-                CodeMetricsLineModel lineCodeMetricsBranche = codeMetricsBranche
-                    .FirstOrDefault(cm => cm.Scope == lineCodeMetricsTrunk.Scope
-                                    && cm.Project == lineCodeMetricsTrunk.Project
-                                    && cm.Namespace == lineCodeMetricsTrunk.Namespace
-                                    && cm.Type == lineCodeMetricsTrunk.Type
-                                    && cm.Member == lineCodeMetricsTrunk.Member);
-
-                if (lineCodeMetricsBranche != null)
-                {
-                    codeMetrics.Add(new CodeMetricsLineView()
-                    {
-                        Scope = lineCodeMetricsBranche.Scope,
-                        Project = lineCodeMetricsTrunk.Project,
-                        Namespace = lineCodeMetricsTrunk.Namespace,
-                        Type = lineCodeMetricsTrunk.Type,
-                        Member = lineCodeMetricsTrunk.Member,
-
-                        MaintainabilityIndexDifference = -(lineCodeMetricsTrunk.MaintainabilityIndex - lineCodeMetricsBranche.MaintainabilityIndex),
-                        CyclomaticComplexityDifference = lineCodeMetricsTrunk.CyclomaticComplexity - lineCodeMetricsBranche.CyclomaticComplexity,
-                        DepthOfInheritanceDifference = lineCodeMetricsTrunk.DepthOfInheritance - lineCodeMetricsBranche.DepthOfInheritance,
-                        ClassCouplingDifference = lineCodeMetricsTrunk.ClassCoupling - lineCodeMetricsBranche.ClassCoupling,
-                        LinesOfCodeDifference = lineCodeMetricsTrunk.LinesOfCode - lineCodeMetricsBranche.LinesOfCode,
-
-                        CodeMetricsTrunk = lineCodeMetricsTrunk,
-                        CodeMetricsBranche = lineCodeMetricsBranche
-                    });
-                }
-            }
-
-            return codeMetrics;
-        }
-
 
         /// <summary>
         /// Init the tree of code metrics
