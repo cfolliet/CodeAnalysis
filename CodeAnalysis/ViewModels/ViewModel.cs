@@ -25,7 +25,7 @@
 
             string[] args = Environment.GetCommandLineArgs();
 
-            if (args.Length == 3)
+            if (args.Length >= 3)
             {
                 CodeMetricsTrunkFilePath = args[1];
                 CodeMetricsBrancheFilePath = args[2];
@@ -197,6 +197,7 @@
                 CodeCoverageTree = new ObservableCollection<CodeCoverageLineView>(tmpTree);
             }
         }
+
 
         #endregion
     }

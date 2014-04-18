@@ -63,7 +63,7 @@
                         <TreeView ItemsSource="{Binding CodeMetricsTree}">
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                                    <Grid Background="{Binding Color}">
+                                    <Grid Background="{Binding Color}" MouseRightButtonUp="OpenFileDiff">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="200" />
                                             <ColumnDefinition Width="180" />
