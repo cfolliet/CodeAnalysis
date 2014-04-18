@@ -77,6 +77,8 @@ namespace CodeAnalysis.BusinessLogic
                     Member = lineCodeMetricsTrunk.Member
                 };
 
+
+                codeMetricsLineView.CodeMetricsBranche = new CodeMetricsLineModel();
                 codeMetricsLineView.CodeMetricsTrunk = lineCodeMetricsTrunk;
                 codeMetricsLineView.Color = new SolidColorBrush(Colors.IndianRed);
 
