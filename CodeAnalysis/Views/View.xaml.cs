@@ -36,8 +36,13 @@
                 var devRepoPath = Environment.GetCommandLineArgs()[3];
                 var sprintRepoPath = Environment.GetCommandLineArgs()[4];
 
-                var devFile = Directory.GetFiles(devRepoPath, lineView.Type + ".cs", SearchOption.AllDirectories).FirstOrDefault();
-                var sprintFile = Directory.GetFiles(sprintRepoPath, lineView.Type + ".cs", SearchOption.AllDirectories).FirstOrDefault();
+                var indexOfBadChar = lineView.Type.IndexOf('<');
+
+                var fileName = indexOfBadChar > -1 ? lineView.Type.Remove(indexOfBadChar) : lineView.Type;
+                fileName += ".cs";
+
+                var devFile = Directory.GetFiles(devRepoPath, fileName, SearchOption.AllDirectories).FirstOrDefault();
+                var sprintFile = Directory.GetFiles(sprintRepoPath, fileName, SearchOption.AllDirectories).FirstOrDefault();
 
                 Process.Start(TortoisemergeExe, "/base:\"" + devFile + "\" /mine:\"" + sprintFile + "\"");
             }
